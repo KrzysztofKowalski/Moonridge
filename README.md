@@ -10,10 +10,8 @@ It's a simple insert into collection benchmark.
 
 ### Results
 
-for < 100
+![Under100](performance_chart_11.png)
 
-![Under100](performance_chart_mini.png)
+![Under100](performance_chart_100.png)
 
-for all points
-
-![Entire](performance_chart.png)
+![Entire](performance_chart_all.png)
