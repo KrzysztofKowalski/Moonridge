@@ -1,4 +1,4 @@
-set terminal pngcairo size 8192, 4320 enhanced font "Arial, 11"
+set terminal pngcairo size 8192, 4320 enhanced font "Arial, 69"
 set output "performance_chart.png"
 
 set title "Performance Chart"
