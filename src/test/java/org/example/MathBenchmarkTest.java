@@ -40,11 +40,13 @@ public class MathBenchmarkTest {
 
     private static final Vector<BenchmarkResult> out = new Vector<>();
 
-    private static final int[] ITERATIONS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-            , 20, 30, 40, 50, 60, 70,
-            100, 1000,
-            100_000, 1_000_000
-
+    private static final int[] ITERATIONS = {
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+            20, 30, 40, 50, 60, 70, 80, 90, 100,
+            200, 300, 400, 500, 600, 700, 800, 900, 1000,
+            2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000,
+            20_000, 40_000, 60_000, 80_000, 100_000,
+            1_000_000, 2_000_000
     };
     private static final Vector<Integer> arrayList = new Vector<>(100_000_000);
     private static final Vector<Integer> vectorList = new Vector<>(100_000_000);
@@ -72,12 +74,20 @@ public class MathBenchmarkTest {
     @AfterAll
     public static void afterAll() {
         Map<Integer, List<BenchmarkResult>> collect = out.stream().collect(Collectors.groupingBy(BenchmarkResult::iterationCount));
+        processLog(collect, "performance_data.txt");
+        Map<Integer, List<BenchmarkResult>> noTree = out.stream().filter(e -> {
+            return !e.operationName.toLowerCase().contains("tree");
+        }).collect(Collectors.groupingBy(BenchmarkResult::iterationCount));
+        processLog(noTree, "performance_data_without_trees.txt");
+    }
 
+    private static void processLog(Map<Integer,
+            List<BenchmarkResult>> collect, String fileName) {
 
         // Create a data file to store performance data for gnuplot
         try {
             FileWriter writer = null;
-            writer = new FileWriter("performance_data.txt");
+            writer = new FileWriter(fileName);
             Integer integer = collect.keySet().stream().findFirst().orElseThrow();
             List<BenchmarkResult> collect1 = collect.get(integer);
             List<String> collect2 = collect1.stream().map(BenchmarkResult::operationName).sorted().toList();

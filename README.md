@@ -15,3 +15,5 @@ It's a simple insert into collection benchmark.
 ![Under100](performance_chart_head.png)
 
 ![Entire](performance_chart_entire.png)
+
+![Notrees](performance_chart_notrees.png)
