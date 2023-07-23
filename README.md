@@ -1,6 +1,6 @@
 # Hello
 
-Its a simple insert into collection benchmark.
+It's a simple insert into collection benchmark.
 
 ## Test machine setup
 
