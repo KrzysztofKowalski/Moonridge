@@ -10,7 +10,7 @@ set format y "%'.0f"   # Use thousands separators in y-axis labels
 set format x "%.0f"
 
 # Define a variable for linewidth
-lw = 20
+lw = 22
 
 plot "performance_data_custom.txt" using 1:2 with lines linewidth lw title "ArrayDeque", \
      "performance_data_custom.txt" using 1:3 with lines linewidth lw title "ArrayList", \
