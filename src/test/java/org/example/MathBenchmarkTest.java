@@ -24,7 +24,7 @@ public class MathBenchmarkTest {
     private static final int[] ITERATIONS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10
             , 20, 30, 40, 50, 60, 70,
             100, 1000,
-            100_000, 1_000_000, 100_000_000
+            100_000, 1_000_000
 
     };
     private static final Vector<Integer> arrayList = new Vector<>(100_000_000);
@@ -61,7 +61,7 @@ public class MathBenchmarkTest {
             writer = new FileWriter("performance_data.txt");
             Integer integer = collect.keySet().stream().findFirst().orElseThrow();
             List<BenchmarkResult> collect1 = collect.get(integer);
-            List<String> collect2 = collect1.stream().map(BenchmarkResult::operationName).sorted().collect(Collectors.toList());
+            List<String> collect2 = collect1.stream().map(BenchmarkResult::operationName).sorted().toList();
 
             StringJoiner stringJoiner = new StringJoiner(", ");
 
@@ -239,6 +239,78 @@ public class MathBenchmarkTest {
         }
     }
 
+    @Test
+    public void testHashSetSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            HashSet<Integer> vx = new HashSet<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.add((Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for HashSet: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "HashSet"));
+        }
+    }
+
+    @Test
+    public void testTreeSetSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            SortedSet<Integer> vx = new TreeSet<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.add((Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for TreeSet: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "TreeSet"));
+        }
+    }
+
+    @Test
+    public void testStackSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            Stack<Integer> vx = new Stack<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.add((Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for Stack: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "Stack"));
+        }
+    }
+
+    @Test
+    public void testLinkedHashSetSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            LinkedHashSet<Integer> vx = new LinkedHashSet<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.add((Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for LinkedHashSet: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "LinkedHashSet"));
+        }
+    }
+
 
     @Test
     public void testLinkedListSpeed() {
@@ -255,6 +327,60 @@ public class MathBenchmarkTest {
             System.out.println("Execution time for LinkedList: " + result + " @ " + ITERATIONS[j]);
             vx.clear();
             out.add(new BenchmarkResult(ITERATIONS[j], result, "LinkedList"));
+        }
+    }
+
+    @Test
+    public void testPriorityQueueSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            PriorityQueue<Integer> vx = new PriorityQueue<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.add((Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for PriorityQueue: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "PriorityQueue"));
+        }
+    }
+
+    @Test
+    public void testTreeMapSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            TreeMap<Integer, Integer> vx = new TreeMap<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.put(i, (Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for TreeMap: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "TreeMap"));
+        }
+    }
+
+    @Test
+    public void testArrayDequeSpeed() {
+        int length = ITERATIONS.length;
+        for (int j = 0; j < length; j++) {
+            ArrayDeque<Integer> vx = new ArrayDeque<>();
+            Object[] objects = Arrays.copyOfRange(arrayList.toArray(), 0, ITERATIONS[j]);
+            long startTime = System.nanoTime();
+            for (int i = 0; i < objects.length; i++) {
+                vx.add((Integer) objects[i]);
+            }
+            long endTime = System.nanoTime();
+            long result = endTime - startTime;
+            System.out.println("Execution time for ArrayDeque: " + result + " @ " + ITERATIONS[j]);
+            vx.clear();
+            out.add(new BenchmarkResult(ITERATIONS[j], result, "ArrayDeque"));
         }
     }
 
